@@ -28,10 +28,14 @@ jobs:
         run: python src/train.py
 
       - name: Run tests
-        run: pytest tests/ --maxfail=1 --disable-warnings -q
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+          pytest tests/ --maxfail=1 --disable-warnings -q
 
       - name: Evaluate model
-        run: python src/evaluate.py
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+          python src/evaluate.py
 
       - name: Upload metrics report
         uses: actions/upload-artifact@v4
